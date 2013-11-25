@@ -1,0 +1,21 @@
+extends layout
+
+block content
+  .row
+    .col-md-12
+      .jumbotron
+        h1 Experimental Build Coordination
+        p 
+          | Build Coordinator is a hack to extract build finished notifications
+          | from mozilla build infrastructure in order to facilitate
+          | experiments with automated testing.
+        ul
+          li
+            a(href='/list-build-tasks')
+              | View Build Tasks
+          li
+            a(href='/list-test-tasks')
+              | View Test Tasks
+          li
+            a(href='/list-other-tasks')
+              | View other tasks that we don't know how to handle yet...

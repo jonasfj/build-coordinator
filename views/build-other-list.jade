@@ -1,0 +1,59 @@
+extends layout
+
+block content
+  .row
+    .col-md-12
+      table.table
+        thead
+          tr
+            th Virtual Branch
+            th Revision
+            th Owner
+            th Comment
+            th Created
+            th Files
+        tbody
+          for task in tasks
+            tr.collapse-next
+              td
+                code.max-30 #{task.virtualBranch}
+              td
+                code #{task.revision.substr(0, 12)}
+              td #{task.owner}
+              td
+                code.max-50 #{task.comment}
+              td #{moment(task.created).fromNow()}
+              td 
+                span.badge(data-toggle='tooltip', title="#{JSON.parse(task.files).length} files")
+                  | #{JSON.parse(task.files).length}
+            tr.collapse-next-target
+              td(colspan="6")
+                dl.dl-horizontal
+                  dt Virtual Branch
+                  dd
+                    code #{task.virtualBranch}
+                  dt Comment
+                  dd
+                    code #{task.comment}
+                  dt Files
+                  dd
+                    ul
+                      for file in JSON.parse(task.files)
+                        li
+                           a(href="http://#{file}") #{file.split('/').pop()}
+                pre(data-json="#{task.raw}")
+  .row
+    .col-md-12
+      ul.pager
+        if prev
+          li.previous
+            a(href="#{prev}") &larr; Previous
+        else
+          li.previous.disabled
+            a &larr; Previous
+        if next
+          li.next
+            a(href="#{next}") Next &rarr; 
+        else
+          li.next.disabled
+            a Next &rarr; 

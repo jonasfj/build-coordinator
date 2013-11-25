@@ -1,0 +1,15 @@
+{
+  "name":         "mozilla-build-coordinator",
+  "description":  "A centralized coordinator for build and test experiments",
+  "version":      "0.0.1",
+  "author":       "Jonas Finnemann Jensen <jopsen@gmail.com>",
+  "private":      true,
+  "dependencies": {
+    "sequelize-sqlite":       "*",
+    "express":                "3.x",
+    "jade":                   "*",
+    "pulse":                  "*",
+    "moment":                 "*"
+  }
+}
+

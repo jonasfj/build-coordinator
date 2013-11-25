@@ -1,0 +1,44 @@
+extends layout
+
+block content
+  .row
+    .col-md-12
+      table.table
+        thead
+          tr
+            th Repository
+            th Revision
+            th Owner
+            th Options
+            th Created
+            th Claimed Until
+        tbody
+          for task in tasks
+            tr.collapse-next
+              td
+                a(href="http://#{task.repository}") #{task.repository}
+              td
+                code #{task.revision.substr(0, 12)}
+              td #{task.owner}
+              td
+                code.max-50 #{task.options}
+              td #{moment(task.created).fromNow()}
+              td #{moment(task.claimedUntil).fromNow()}
+            tr.collapse-next-target
+              td(colspan="6")
+                pre(data-json="#{task.raw}")
+  .row
+    .col-md-12
+      ul.pager
+        if prev
+          li.previous
+            a(href="#{prev}") &larr; Previous
+        else
+          li.previous.disabled
+            a &larr; Previous
+        if next
+          li.next
+            a(href="#{next}") Next &rarr; 
+        else
+          li.next.disabled
+            a Next &rarr; 

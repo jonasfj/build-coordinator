@@ -1,0 +1,60 @@
+extends layout
+
+block content
+  .row
+    .col-md-12
+      table.table
+        thead
+          tr
+            th Platform
+            th Type
+            th Owner
+            th Options
+            th Files
+            th Created
+            th Claimed Until
+        tbody
+          for task in tasks
+            tr.collapse-next
+              td #{task.platform}
+              td #{task.type}
+              td #{task.owner}
+              td
+                code.max-50(data-toggle='tooltip', title="#{task.options}")
+                  | #{task.options}
+              td
+                span.badge(data-toggle='tooltip', title="#{JSON.parse(task.binaries).length} files")
+                  | #{JSON.parse(task.binaries).length}
+              td #{moment(task.created).fromNow()}
+              td #{moment(task.claimedUntil).fromNow()}
+            tr.collapse-next-target
+              td(colspan="7")
+                dl.dl-horizontal
+                  dt Repository
+                  dd
+                    a(href="http://#{task.repository}") #{task.repository}
+                  dt Revision
+                  dd
+                    code #{task.revision.substr(0, 12)}
+                  dt Files
+                  dd
+                    ul
+                      for file in JSON.parse(task.binaries)
+                        li
+                           a(href="http://#{file}") #{file.split('/').pop()}
+                pre(data-json="#{task.raw}")
+  .row
+    .col-md-12
+      ul.pager
+        if prev
+          li.previous
+            a(href="#{prev}") &larr; Previous
+        else
+          li.previous.disabled
+            a &larr; Previous
+        if next
+          li.next
+            a(href="#{next}") Next &rarr; 
+        else
+          li.next.disabled
+            a Next &rarr; 
