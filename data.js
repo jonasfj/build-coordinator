@@ -61,8 +61,6 @@ exports.OtherTasks = db.define('OtherTask', {
   raw:            Sequelize.TEXT
 });
 
-// Create database schema
-db.sync();
 
 /** Delete old tasks */
 exports.clearExpired = function() {
@@ -71,3 +69,8 @@ exports.clearExpired = function() {
   exports.TestTasks.destroy({created: {'lt': yesterday}});
   exports.OtherTasks.destroy({created: {'lt': yesterday}});
 };
+
+// Create database schema
+db.sync().success(function() {
+  exports.clearExpired();
+});
