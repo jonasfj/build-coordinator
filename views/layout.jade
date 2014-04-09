@@ -8,40 +8,40 @@ html(lang="en")
     script(src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js")
     script(src="/JSONFormatter.js")
     style
-      code.max-30 {
-        max-width:  30ex;
-        overflow:   hidden;
-        display:    inline-block;
-      }
-      code.max-40 {
-        max-width:  40ex;
-        overflow:   hidden;
-        display:    inline-block;
-      }
-      code.max-50 {
-        max-width:  50ex;
-        overflow:   hidden;
-        display:    inline-block;
-      }
-      .collapse-next {
-        cursor:     pointer;
-      }
-      .collapse-next-target {
-        display:    none;
-      }
-      .tooltip-inner {
-        max-width:  300px;
-      }
+      | code.max-30 {
+      |   max-width:  30ex;
+      |   overflow:   hidden;
+      |   display:    inline-block;
+      | }
+      | code.max-40 {
+      |   max-width:  40ex;
+      |   overflow:   hidden;
+      |   display:    inline-block;
+      | }
+      | code.max-50 {
+      |   max-width:  50ex;
+      |   overflow:   hidden;
+      |   display:    inline-block;
+      | }
+      | .collapse-next {
+      |   cursor:     pointer;
+      | }
+      | .collapse-next-target {
+      |   display:    none;
+      | }
+      | .tooltip-inner {
+      |   max-width:  300px;
+      | }
     script
-      $(function() {
-        $('[data-toggle="tooltip"]').tooltip({placement: 'auto'});
-        $('.collapse-next').click(function() {
-          $(this).next().toggle();
-        });
-        $('[data-json]').each(function(index) {
-          $(this).jsonFormat(JSON.stringify($(this).data('json')));
-        });
-      });
+      | $(function() {
+      |   $('[data-toggle="tooltip"]').tooltip({placement: 'auto'});
+      |   $('.collapse-next').click(function() {
+      |     $(this).next().toggle();
+      |   });
+      |   $('[data-json]').each(function(index) {
+      |     $(this).jsonFormat(JSON.stringify($(this).data('json')));
+      |   });
+      | });
   body
     nav.navbar.navbar-default.navbar-static-top(role="navigation")
       .navbar-header
