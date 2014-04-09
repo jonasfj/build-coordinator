@@ -113,4 +113,4 @@ incoming.listen();
 // Clear expired data every hour
 setInterval(data.clearExpired, 60 * 60 * 1000);
 
-app.listen(3000);
+app.listen(process.env.PORT || 3001);
