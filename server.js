@@ -96,7 +96,8 @@ app.get('/list-other-tasks/:offset?', function(req,res) {
   OtherTasks.all({
     limit:  PG_SIZE,
     offset: offset,
-    where:  query
+    where:  query,
+    order:  [['created', 'DESC']]
   }).success(function(tasks) {
     res.render('build-other-list.jade', {
       title:  title,
@@ -112,5 +113,6 @@ incoming.listen();
 
 // Clear expired data every hour
 setInterval(data.clearExpired, 60 * 60 * 1000);
+data.clearExpired();
 
 app.listen(process.env.PORT || 3002);

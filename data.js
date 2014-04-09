@@ -1,13 +1,24 @@
 // Data definitions
 
-var Sequelize = require('sequelize-sqlite').sequelize
+var Sequelize = require('sequelize');
 var moment = require('moment');
 
-var db = new Sequelize('database', 'username', 'password', {
-  dialect:  'sqlite',
-  storage:  'database.sqlite',
-  logging:  false,
-});
+var db = null;
+if (process.env.DATABASE_URL) {
+  var connstr = process.env.DATABASE_URL;
+  var match = connstr.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
+  db = new Sequelize(match[5], match[1], match[2], {
+    dialect:  'sqlite',
+    storage:  'database.sqlite',
+    logging:  false
+  });
+} else {
+  db = new Sequelize('database', 'username', 'password', {
+    dialect:  'sqlite',
+    storage:  'database.sqlite',
+    logging:  false
+  });
+}
 
 /** Queue of revisions to built */
 exports.BuildTasks = db.define('BuildTask', {
@@ -53,8 +64,8 @@ db.sync();
 
 /** Delete old tasks */
 exports.clearExpired = function() {
-  var yesterday = moment().subtract('days', 1).toDate();
-  exports.BuildTasks.destroy({where: ['created < ?', yesterday]});
-  exports.TestTasks.destroy({where: ['created < ?', yesterday]});
-  exports.OtherTasks.destroy({where: ['created < ?', yesterday]});
+  var yesterday = moment().subtract('hours', 24).toDate();
+  exports.BuildTasks.destroy({created: {'lt': yesterday}});
+  exports.TestTasks.destroy({created: {'lt': yesterday}});
+  exports.OtherTasks.destroy({created: {'lt': yesterday}});
 };

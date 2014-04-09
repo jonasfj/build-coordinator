@@ -78,7 +78,8 @@ exports.consumePulse = function(msg) {
 };
 
 exports.listen = function() {
-  var consumer = pulse.createConsumer('build', 'build-coordinator');
+  var queueName = process.env.QUEUE_NAME || 'test-build-coordinator';
+  var consumer = pulse.createConsumer('build', queueName);
   consumer.on('message', exports.consumePulse);
 };
 
