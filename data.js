@@ -8,8 +8,10 @@ if (process.env.DATABASE_URL) {
   var connstr = process.env.DATABASE_URL;
   var match = connstr.match(/postgres:\/\/([^:]+):([^@]+)@([^:]+):(\d+)\/(.+)/);
   db = new Sequelize(match[5], match[1], match[2], {
-    dialect:  'sqlite',
-    storage:  'database.sqlite',
+    dialect:  'postgres',
+    protocol: 'postgres',
+    port:     match[4],
+    host:     match[3],
     logging:  false
   });
 } else {
