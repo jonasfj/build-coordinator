@@ -46,7 +46,8 @@ app.get('/list-build-tasks/:offset?', function(req,res) {
   BuildTasks.all({
     limit:  PG_SIZE,
     offset: offset,
-    where:  query
+    where:  query,
+    order:  [['created', 'DESC']]
   }).success(function(tasks) {
     res.render('build-task-list.jade', {
       title:  title,
@@ -71,7 +72,8 @@ app.get('/list-test-tasks/:offset?', function(req,res) {
   TestTasks.all({
     limit:  PG_SIZE,
     offset: offset,
-    where:  query
+    where:  query,
+    order:  [['created', 'DESC']]
   }).success(function(tasks) {
     res.render('test-task-list.jade', {
       title:  title,
