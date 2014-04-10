@@ -6,6 +6,7 @@ var TestTasks = data.TestTasks;
 var OtherTasks = data.OtherTasks;
 var pulse = require("pulse");
 var moment = require('moment');
+var post = require('./post');
 
 exports.consumePulse = function(msg) {
   if(msg._meta && msg.payload && msg.payload.change) {
@@ -15,12 +16,22 @@ exports.consumePulse = function(msg) {
     // Create build tasks when somebody pushes to try
     if (change.branch == 'try') {
       BuildTasks.create({
-        revision:     change.revision,
-        repository:   'hg.mozilla.org/try',
-        options:      change.comments,
-        owner:        change.who,
-        created:      moment(meta.sent).toDate(),
-        raw:          JSON.stringify(msg)
+        revision:       change.revision,
+        repository:     'hg.mozilla.org/try',
+        options:        change.comments,
+        owner:          change.who,
+        created:        moment().toDate(),
+        raw:            JSON.stringify(msg),
+        taskGraphId:    "",
+        taskGraphErr: ""
+      }).success(function(task) {
+        post.postTryPush(change).then(function(taskGraphId) {
+          task.taskGraphId = taskGraphId;
+          task.save();
+        }).catch(function(err) {
+          task.taskGraphErr = err.toString();
+          task.save();
+        });
       });
       return;
     }

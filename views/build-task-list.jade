@@ -11,7 +11,7 @@ block content
             th Owner
             th Options
             th Created
-            th Claimed Until
+            th Task-Graph
         tbody
           for task in tasks
             tr.collapse-next
@@ -23,7 +23,14 @@ block content
               td
                 code.max-50 #{task.options}
               td #{moment(task.created).fromNow()}
-              td #{moment(task.claimedUntil).fromNow()}
+              td
+                if task.taskGraphId != ""
+                  code
+                    a(href="http://docs.taskcluster.net/tools/task-graph-inspector/##{task.taskGraphId}")
+                     | #{task.taskGraphId}
+                else
+                  span.badge(data-toggle='tooltip', title="#{task.taskGraphErr}")
+                    | error
             tr.collapse-next-target
               td(colspan="6")
                 pre(data-json="#{task.raw}")

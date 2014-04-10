@@ -30,8 +30,9 @@ exports.BuildTasks = db.define('BuildTask', {
   options:      Sequelize.STRING,
   owner:        Sequelize.STRING,
   created:      {type: Sequelize.DATE, defaultValue: Sequelize.NOW},
-  claimedUntil: {type: Sequelize.DATE, defaultValue: Sequelize.NOW},
-  raw:          Sequelize.TEXT
+  raw:          Sequelize.TEXT,
+  taskGraphId:  Sequelize.STRING,
+  taskGraphErr: Sequelize.TEXT
 });
 
 /** Queue of tests to execute */
