@@ -45,7 +45,6 @@ exports.consumePulse = function(msg) {
     // unit testing
     if (change.branch == 'try-linux64-debug-unittest') {
       console.log('try-linux64-debug-unittest');
-      console.log(change);
       var files = change.files.map(function(entry) {return entry.name});
       TestTasks.create({
         platform:     'linux64',
@@ -65,7 +64,6 @@ exports.consumePulse = function(msg) {
     // for unit testing
     if (change.branch == 'try-linux64-opt-unittest') {
       console.log('try-linux64-opt-unittest');
-      console.log(change);
       var files = change.files.map(function(entry) {return entry.name});
       TestTasks.create({
         platform:     'linux64',
@@ -86,7 +84,6 @@ exports.consumePulse = function(msg) {
     // Cache all other tasks for fun
     var files = change.files.map(function(entry) {return entry.name});
     console.log('other');
-    console.log(change);
     OtherTasks.create({
       revision:       change.revision,
       virtualBranch:  change.branch,
