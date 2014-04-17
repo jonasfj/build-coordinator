@@ -25,9 +25,9 @@ exports.consumePulse = function(msg) {
         created:        moment().toDate(),
         raw:            JSON.stringify(msg),
         taskGraphId:    "",
-        taskGraphErr:   ""
+        taskGraphErr:   "Posting disabled"
       }).success(function(task) {
-        post.postTryPush(change).then(function(taskGraphId) {
+        /*post.postTryPush(change).then(function(taskGraphId) {
           task.taskGraphId = taskGraphId;
           task.save();
         }).catch(function(err) {
@@ -36,7 +36,7 @@ exports.consumePulse = function(msg) {
             console.log("Failed to save taskGraphErr: %s", err.toString());
             console.log("Error: " + error.toString(), error.stack);
           });
-        });
+        });*/
       });
       return;
     }
